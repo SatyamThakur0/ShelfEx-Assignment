@@ -1,0 +1,12 @@
+{
+    "extends": "./jsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["src/**/*.jsx", "src/**/*.js", "src/**/*.css"],
+    "exclude": ["node_modules", "dist"]
+}
