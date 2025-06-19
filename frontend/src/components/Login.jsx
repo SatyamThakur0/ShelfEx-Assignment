@@ -162,34 +162,6 @@ const Login = () => {
                         </p>
                     </div>
 
-                    {/* Profile Picture Upload (Register only) */}
-                    {!isLogin && (
-                        <div className="flex flex-col items-center space-y-4 mb-6">
-                            <div className="relative">
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                                    {formData.profilePicture ? (
-                                        <img
-                                            src={formData.profilePicture}
-                                            alt="Profile"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    ) : (
-                                        <Camera className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
-                                    )}
-                                </div>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleProfilePictureUpload}
-                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                />
-                            </div>
-                            <p className="text-xs sm:text-sm text-gray-500">
-                                Upload profile picture (optional)
-                            </p>
-                        </div>
-                    )}
-
                     <div className="space-y-4 sm:space-y-6">
                         {/* Name Field (Register only) */}
                         {!isLogin && (
@@ -410,15 +382,6 @@ const Login = () => {
                             </button>
                         </p>
                     </div>
-
-                    {/* Forgot Password (Login only) */}
-                    {isLogin && (
-                        <div className="mt-4 text-center">
-                            <button className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 hover:underline transition-colors">
-                                Forgot your password?
-                            </button>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

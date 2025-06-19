@@ -94,14 +94,15 @@ const Sidebar = () => {
                             <span className="hidden sm:block">
                                 {item.itemName}
                             </span>
-                            {item.itemName === "Notification" && (
-                                <Badge
-                                    className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
-                                    variant="destructive"
-                                >
-                                    {notiCount}
-                                </Badge>
-                            )}
+                            {notiCount > 0 &&
+                                item.itemName === "Notification" && (
+                                    <Badge
+                                        className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                                        variant="destructive"
+                                    >
+                                        {notiCount}
+                                    </Badge>
+                                )}
                         </div>
                     </div>
                 ))}

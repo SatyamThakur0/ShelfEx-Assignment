@@ -51,7 +51,7 @@ export const getFollowingPosts = async (req, res) => {
         const user = await User.findById(req.user._id);
         const following = user.following;
         const posts = await Post.find({ author: { $in: following } })
-            .populate("author", "username profilePicture createdAt")
+            .populate("author", "username name profilePicture createdAt")
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);

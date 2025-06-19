@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Heart, MessageCircle, Share, MoreHorizontal } from "lucide-react";
+import {
+    Heart,
+    MessageCircle,
+    Share,
+    MoreHorizontal,
+    User,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { postActions } from "@/store/postSlice";
 import { deletePost as deletePostAPI } from "@/APIs/fetchPosts";
@@ -59,11 +65,25 @@ const PostCard = ({ post }) => {
             {/* Header */}
             <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between p-3 sm:p-4 pb-2 sm:pb-3 relative gap-2 xs:gap-0">
                 <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
-                    <img
-                        src={post.author.profilePicture || ""}
-                        alt={post.author.username}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
-                    />
+                    <div
+                        onClick={() => handleOpenProfile()}
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0 cursor-pointer"
+                    >
+                        {user.profilePicture ? (
+                            <img
+                                src={post?.author.profilePicture}
+                                alt={post?.author.name}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                    e.target.style.display = "none";
+                                    e.target.nextSibling.style.display = "flex";
+                                }}
+                            />
+                        ) : null}
+                        <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                            <User className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
+                        </div>
+                    </div>
                     <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
                             {post.author.name}
