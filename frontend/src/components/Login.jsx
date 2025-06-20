@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "@/store/userSlice";
+import { toast } from "sonner";
 
 const Login = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -26,6 +27,7 @@ const Login = () => {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [demoLoading, setDemoLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -70,7 +72,6 @@ const Login = () => {
 
         // Simulate API call
 
-        setIsLoading(false);
         // Here you would typically make an API call to your backend
         const response = fetch(
             `${import.meta.env.VITE_BACKEND_URL}/api/auth/${
@@ -93,7 +94,11 @@ const Login = () => {
                 localStorage.setItem("token", data.token);
                 if (data.ok) {
                     navigate("/");
+                    setIsLoading(false);
                 }
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     };
 
@@ -139,6 +144,31 @@ const Login = () => {
         }
     };
 
+    // Fetch demo user credentials and fill form
+    const handleDemoLogin = async (role) => {
+        setDemoLoading(true);
+        try {
+            const res = await fetch(
+                `${
+                    import.meta.env.VITE_BACKEND_URL
+                }/api/auth/demo-user?role=${role}`
+            );
+            const data = await res.json();
+            if (data.ok && data.user) {
+                setFormData((prev) => ({
+                    ...prev,
+                    email: data.user.email,
+                    password: data.user.password,
+                }));
+                setErrors((prev) => ({ ...prev, email: "", password: "" }));
+            }
+        } catch (err) {
+            // Optionally handle error
+            toast.error(err.message);
+        }
+        setDemoLoading(false);
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br flex items-center justify-center p-2 sm:p-4">
             <div className="w-full max-w-xs sm:max-w-md">
@@ -163,6 +193,30 @@ const Login = () => {
                     </div>
 
                     <div className="space-y-4 sm:space-y-6">
+                        {/* Demo Buttons */}
+                        {isLogin && (
+                            <div className="flex justify-between mb-2 gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => handleDemoLogin("public")}
+                                    disabled={demoLoading}
+                                    className="flex-1 bg-blue-100 text-blue-700 py-2 rounded-xl font-medium text-xs sm:text-sm hover:bg-blue-200 transition-all disabled:opacity-50"
+                                >
+                                    {demoLoading ? "Loading..." : "Public Demo"}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDemoLogin("celeb")}
+                                    disabled={demoLoading}
+                                    className="flex-1 bg-yellow-100 text-yellow-700 py-2 rounded-xl font-medium text-xs sm:text-sm hover:bg-yellow-200 transition-all disabled:opacity-50"
+                                >
+                                    {demoLoading
+                                        ? "Loading..."
+                                        : "Celebrity Demo"}
+                                </button>
+                            </div>
+                        )}
+
                         {/* Name Field (Register only) */}
                         {!isLogin && (
                             <div className="space-y-2">

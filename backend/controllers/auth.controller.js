@@ -129,3 +129,31 @@ export const logout = async (req, res) => {
         });
     }
 };
+
+// Demo users (hardcoded)
+const demoUsers = {
+    public: {
+        email: "publicdemo@example.com",
+        password: "public1234",
+    },
+    celeb: {
+        email: "celebdemo@example.com",
+        password: "celeb1234",
+    },
+};
+
+export const getDemoUser = async (req, res) => {
+    try {
+        const { role } = req.query;
+        if (!role || !["public", "celeb"].includes(role)) {
+            return res.status(400).json({ ok: false, message: "Invalid role" });
+        }
+        return res.status(200).json({ ok: true, user: demoUsers[role] });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: "Error fetching demo user",
+            error: error.message,
+        });
+    }
+};

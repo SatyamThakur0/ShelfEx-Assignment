@@ -82,30 +82,37 @@ const Sidebar = () => {
                 setOpen={setIsOpenNotification}
             />
             <section className="fixed w-56 h-[100vh] border-r border-gray-300 hidden sm:flex flex-col gap-2 p-4 bg-white z-40">
-                {sidebarItems.map((item) => (
-                    <div key={item.itemName}>
-                        <div
-                            onClick={() => handleTabClick(item.itemName)}
-                            className={`flex relative  items-center gap-2 hover:hov-bg-color text-over-bg rounded-sm py-2 px-3 cursor-pointer transition-all ${
-                                activeTab === item.itemName && `bg-color`
-                            }`}
-                        >
-                            {item.icon}
-                            <span className="hidden sm:block">
-                                {item.itemName}
-                            </span>
-                            {notiCount > 0 &&
-                                item.itemName === "Notification" && (
-                                    <Badge
-                                        className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
-                                        variant="destructive"
-                                    >
-                                        {notiCount}
-                                    </Badge>
-                                )}
-                        </div>
-                    </div>
-                ))}
+                {sidebarItems.map(
+                    (item) =>
+                        (item.itemName == "Create" &&
+                        user.role == "public") || (
+                            <div key={item.itemName}>
+                                <div
+                                    onClick={() =>
+                                        handleTabClick(item.itemName)
+                                    }
+                                    className={`flex relative  items-center gap-2 hover:hov-bg-color text-over-bg rounded-sm py-2 px-3 cursor-pointer transition-all ${
+                                        activeTab === item.itemName &&
+                                        `bg-color`
+                                    }`}
+                                >
+                                    {item.icon}
+                                    <span className="hidden sm:block">
+                                        {item.itemName}
+                                    </span>
+                                    {notiCount > 0 &&
+                                        item.itemName === "Notification" && (
+                                            <Badge
+                                                className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                                                variant="destructive"
+                                            >
+                                                {notiCount}
+                                            </Badge>
+                                        )}
+                                </div>
+                            </div>
+                        )
+                )}
             </section>
         </>
     );

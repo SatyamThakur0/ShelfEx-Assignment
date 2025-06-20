@@ -20,7 +20,7 @@ const startServer = async () => {
         // Now setup routes and start server
     } catch (err) {
         console.error("❌ Redis connection failed:", err);
-        process.exit(1); // exit if Redis fails
+        // process.exit(1);
     }
 };
 
