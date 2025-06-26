@@ -35,6 +35,7 @@ const Header = () => {
                 dispatch(postActions.clearPosts());
                 navigate("/login");
                 localStorage.removeItem("user");
+                localStorage.removeItem("token");
             }
         } catch (error) {}
     };
